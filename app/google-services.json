@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "433817838337",
+    "project_id": "prestameos",
+    "storage_bucket": "prestameos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433817838337:android:61fc3837e164a61ea6f100",
+        "android_client_info": {
+          "package_name": "com.ericson.prestameos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433817838337-fm47p2indv5233npbeg1k6p10nsih2i7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9jyrrjhzU3scncMiBtXUqbIEbFVFRG-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433817838337-fm47p2indv5233npbeg1k6p10nsih2i7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

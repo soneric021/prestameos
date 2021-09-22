@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Prestameos</string>
+    <string name="new_client">Nuevo Cliente</string>
+    <string name="direction">Direccion</string>
+    <string name="name">Nombre:</string>
+    <string name="lastname">Apellidos</string>
+    <string name="identifier">Cedula:</string>
+    <string name="create">Crear</string>
+    <string name="cancel">Cancelar</string>
+    <string name="name_client">Nombre Cliente</string>
+    <string name="information">Informacion</string>
+    <string name="prestameos">Prestameos:</string>
+    <string name="arrow_right"><![CDATA[>]]></string>
+    <string name="rd_0_0">RD$0.0</string>
+    <string name="search_client">Buscar cliente</string>
+    <string name="clients">Clientes</string>
+    <string name="brand">Logo</string>
+</resources>
