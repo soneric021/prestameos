@@ -1,38 +1,34 @@
 package com.ericson.prestameos.data
 
 import android.util.Log
-import com.ericson.prestameos.data.models.Client
-import com.ericson.prestameos.data.models.Tables
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
+import androidx.lifecycle.LiveData
+import com.ericson.prestameos.data.local.LoanDatabase
+import com.ericson.prestameos.data.models.entities.Client
+import com.ericson.prestameos.data.models.entities.ClientWithPrestameo
+import com.ericson.prestameos.data.models.Result
+import com.ericson.prestameos.utils.Utils
 import java.lang.Exception
 import javax.inject.Inject
 
-class ClientData @Inject constructor(private val db: FirebaseFirestore) {
+class ClientData @Inject constructor(private val db: LoanDatabase) {
 
-    suspend fun add(obj: Client):Boolean {
+    suspend fun add(obj: Client):Result<Boolean> {
             return try{
-                Log.d("cliente", "creada")
-                db.collection(Tables.CLIENTE).add(obj).await()
-                true
+                obj.nickName = Utils.generateNickName(obj.names)
+                db.clientDao().save(obj)
+                Result.Success(true)
             }catch(e:Exception){
                 Log.e("cliente", e.message, e)
-                false
+                Result.Error(e)
             }
         }
 
-    suspend fun get(): List<Client>? {
-            return try {
-                db.collection(Tables.CLIENTE).get().await().toObjects(Client::class.java)
-            }catch (e:Exception){
-                Log.e("cliente", "Error", e)
-                null
-            }
-
+        fun get(): LiveData<List<Client>> {
+           return db.clientDao().getAll()
         }
 
-         fun getById(): Client {
-                TODO("Not yet implemented")
+        fun getById(id:Int):LiveData<ClientWithPrestameo>  {
+               return db.clientDao().getWithPrestameos(id)
         }
 
          fun update(obj: Client) {

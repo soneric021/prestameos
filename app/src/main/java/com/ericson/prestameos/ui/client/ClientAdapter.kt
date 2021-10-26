@@ -7,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ericson.prestameos.R
-import com.ericson.prestameos.data.models.ResponseClients
+import com.ericson.prestameos.data.models.entities.Client
+import com.ericson.prestameos.data.models.Tables
 import com.ericson.prestameos.databinding.LayoutClientsBinding
 
-class ClientAdapter(private val context: Context, var list: List<ResponseClients>): RecyclerView.Adapter<ClientAdapter.ViewHolder>() {
+class ClientAdapter(private val context: Context, var list: List<Client>): RecyclerView.Adapter<ClientAdapter.ViewHolder>() {
 
-    fun submitList(l:List<ResponseClients>){
+    fun submitList(l:List<Client>){
         list = l
-        this.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -27,7 +28,7 @@ class ClientAdapter(private val context: Context, var list: List<ResponseClients
         holder.binding.nameClient.text = list[position].names
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ClientActivity::class.java)
-            //intent.putExtra(Tables.CLIENTE, list[position])
+            intent.putExtra(Tables.CLIENTE, list[position])
             context.startActivity(intent)
         }
 

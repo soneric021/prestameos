@@ -3,14 +3,15 @@ package com.ericson.prestameos.di
 import android.content.Context
 import com.ericson.prestameos.ui.client.ClientActivity
 import com.ericson.prestameos.ui.MainActivity
-import com.ericson.prestameos.ui.client.ClientFormActivity
-import com.google.firebase.firestore.FirebaseFirestore
+import com.ericson.prestameos.ui.client.form.ClientFormActivity
+import com.ericson.prestameos.ui.payment.PaymentDialogFragment
+import com.ericson.prestameos.ui.prestameos.form.PrestameoFormActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [NetworkModule::class, ViewModelModule::class])
+@Component(modules = [NetworkModule::class, ViewModelModule::class, LocalModule::class])
 interface AppComponent {
     @Component.Factory
     interface Factory {
@@ -19,9 +20,10 @@ interface AppComponent {
 
 
     }
-    val db:FirebaseFirestore
 
     fun inject(activity: MainActivity)
     fun inject(activity: ClientActivity)
+    fun inject(activity:PrestameoFormActivity)
+    fun inject(fragment: PaymentDialogFragment)
     fun inject(activity: ClientFormActivity)
 }

@@ -5,55 +5,37 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ericson.prestameos.data.ClientData
-import com.ericson.prestameos.data.models.Client
+import com.ericson.prestameos.data.models.entities.Client
+import com.ericson.prestameos.data.models.entities.ClientWithPrestameo
 import com.ericson.prestameos.data.models.ResponseClients
 import com.ericson.prestameos.data.models.Result
 import com.ericson.prestameos.data.remote.ClientRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class ClientViewModel @Inject constructor(val data: ClientData, val dataN: ClientRepository) : ViewModel() {
 
-    private val clients:MutableLiveData<List<Client>> = MutableLiveData()
+    private var  clients:LiveData<List<Client>> = data.get()
     private val clientsN = MutableLiveData<List<ResponseClients>>()
     private val _dataLoading = MutableLiveData<Boolean>()
+    private lateinit var client:LiveData<ClientWithPrestameo>
     val dataloading:LiveData<Boolean> = _dataLoading
-    private  val _message = MutableLiveData<String>()
-    private val message:LiveData<String> = _message
-    init {
-        viewModelScope.launch {
-            //clients.value = data.get()
-           dataN.get().let {
-               when(it){
-                   is Result.Success -> {
-                       _dataLoading.value = false
-                       clientsN.postValue(it.data!!)
-                   }
-                   else -> _dataLoading.value = true
-               }
-           }
-        }
+    private val _message = MutableLiveData<Result<Boolean>>()
+    val message:LiveData<Result<Boolean>> = _message
+
+    fun get(clienId: Int):LiveData<ClientWithPrestameo>{
+        client = data.getById(clienId)
+        return client
     }
-    fun get():LiveData<List<ResponseClients>>{
-        return clientsN
+    fun get():LiveData<List<Client>>{
+        return clients
     }
 
-    fun add(client:ResponseClients){
-        viewModelScope.launch(Dispatchers.IO) {
-           dataN.add(client).let {
-             when(it){
-                 is Result.Success -> {
-                     _dataLoading.value = false
-                     _message.value = "Cliente creado exitosasmente"
-                 }
-                 is Result.Error -> {
-                     _dataLoading.value = false
-                     _message.value = it.exception.message ?: "un error"
-                 }
-                 else -> _dataLoading.value = true
-             }
+    fun add(client: Client){
+        viewModelScope.launch {
+           data.add(client).let {
+                _message.value = it
            }
         }
     }

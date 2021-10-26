@@ -1,31 +1,25 @@
 package com.ericson.prestameos.data
 
-import android.util.Log
-import com.ericson.prestameos.data.models.Prestameo
-import com.ericson.prestameos.data.models.Tables
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
+import com.ericson.prestameos.data.local.LoanDatabase
+import com.ericson.prestameos.data.models.entities.Prestameo
+import com.ericson.prestameos.data.models.Result
 import java.lang.Exception
+import javax.inject.Inject
 
-class PrestameoData  {
-    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-     suspend fun add(obj: Prestameo, clientId:String): Boolean {
-       return try {
-           db.collection(Tables.CLIENTE).document(clientId).collection(Tables.PRESTAMEO).add(obj).await()
-           true
-       }catch (e:Exception){
-           Log.e("cliente", e.message, e)
-           false
-       }
+
+class PrestameoData  @Inject constructor( private val loanDatabase: LoanDatabase)  {
+
+     suspend fun add(obj: Prestameo): Result<Boolean> {
+     return try{
+         loanDatabase.loanDao().save(obj)
+         Result.Success(true)
+     }catch (e:Exception){
+         Result.Error(e)
+     }
     }
 
      suspend fun get( clientId:String): List<Prestameo>? {
-         return try {
-             db.collection(Tables.CLIENTE).document(clientId).collection(Tables.PRESTAMEO).get().await().toObjects(Prestameo::class.java)
-         }catch (e:Exception){
-             Log.e("cliente", e.message, e)
-             null
-         }
+       TODO()
     }
 
      fun getById(): Prestameo {
