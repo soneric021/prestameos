@@ -13,10 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Prestameos">
-        <activity android:name=".ui.prestameos.form.PrestameoFormActivity"></activity>
-        <activity android:name=".ui.client.form.ClientFormActivity" />
-        <activity android:name=".ui.client.ClientActivity" />
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

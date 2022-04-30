@@ -8,7 +8,7 @@ import com.ericson.prestameos.data.models.entities.ClientWithPrestameo
 @Dao
 interface ClientDao {
     @Query("SELECT * FROM client")
-    fun getAll():LiveData<List<Client>>
+    fun getAll():LiveData<List<ClientWithPrestameo>>
 
     @Query("SELECT * FROM client where id = :Id")
     suspend fun get(Id:Int): Client

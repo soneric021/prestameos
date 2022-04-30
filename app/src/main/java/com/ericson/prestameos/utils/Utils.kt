@@ -10,4 +10,11 @@ object Utils {
     fun getDate():Date{
         return Calendar.getInstance().time
     }
+    fun getPesos(amount:Double?):String{
+        return if(amount == null){
+            "0.00"
+        }else{
+            "RD$" + amount + "0"
+        }
+    }
 }

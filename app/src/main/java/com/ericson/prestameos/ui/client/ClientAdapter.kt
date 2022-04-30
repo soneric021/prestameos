@@ -1,43 +1,42 @@
 package com.ericson.prestameos.ui.client
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ericson.prestameos.R
 import com.ericson.prestameos.data.models.entities.Client
-import com.ericson.prestameos.data.models.Tables
-import com.ericson.prestameos.databinding.LayoutClientsBinding
+import com.ericson.prestameos.data.models.entities.ClientWithPrestameo
+import com.ericson.prestameos.databinding.ItemUserBinding
 
-class ClientAdapter(private val context: Context, var list: List<Client>): RecyclerView.Adapter<ClientAdapter.ViewHolder>() {
-
-    fun submitList(l:List<Client>){
-        list = l
+class ClientAdapter : RecyclerView.Adapter<ClientAdapter.ViewHolder>() {
+    private var data = emptyList<ClientWithPrestameo>()
+    fun submitList(list:List<ClientWithPrestameo>){
+        data = list
         notifyDataSetChanged()
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_clients, parent, false)
-
-        return ViewHolder(view)
+     class ViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(client:ClientWithPrestameo){
+            binding.tvLetter.text = client.cliente.names[0].toString()
+            binding.tvName.text = client.cliente.names
+        }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return when(viewType){
+            R.layout.item_user -> ViewHolder(ItemUserBinding.inflate(LayoutInflater.from(parent.context)))
+            else -> throw Exception("this viewtype is not correct $viewType")
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int  = R.layout.item_user
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.nameClient.text = list[position].names
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, ClientActivity::class.java)
-            intent.putExtra(Tables.CLIENTE, list[position])
-            context.startActivity(intent)
+        when(holder){
+            is ViewHolder -> {
+                holder.bind(data[position])
+            }
         }
-
     }
 
-    override fun getItemCount(): Int = list.size
-
-    class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-         val binding = LayoutClientsBinding.bind(itemView)
-
-    }
+    override fun getItemCount(): Int = data.size
 }

@@ -1,8 +1,11 @@
 package com.ericson.prestameos.data.models.entities
 
 import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.Relation
+import kotlinx.parcelize.Parcelize
 
+@Entity
 data class ClientWithPrestameo(
         @Embedded val cliente: Client,
         @Relation(

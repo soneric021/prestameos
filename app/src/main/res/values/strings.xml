@@ -15,4 +15,8 @@
     <string name="search_client">Buscar cliente</string>
     <string name="clients">Clientes</string>
     <string name="brand">Logo</string>
+    <string name="a">A</string>
+    <string name="loan_to_clients">Prestar a clientes</string>
+    <string name="recent_transactions">Transacciones recientes</string>
+    <string name="dont_have_transactions_yet">Todavia no hay Transacciones</string>
 </resources>

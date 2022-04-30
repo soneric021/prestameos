@@ -23,7 +23,7 @@ class ClientData @Inject constructor(private val db: LoanDatabase) {
             }
         }
 
-        fun get(): LiveData<List<Client>> {
+        fun get(): LiveData<List<ClientWithPrestameo>> {
            return db.clientDao().getAll()
         }
 
@@ -31,11 +31,11 @@ class ClientData @Inject constructor(private val db: LoanDatabase) {
                return db.clientDao().getWithPrestameos(id)
         }
 
-         fun update(obj: Client) {
+         fun update(client: Client) {
                 TODO("Not yet implemented")
         }
 
-         fun delete(obj: Client) {
+         fun delete(client: Client) {
                 TODO("Not yet implemented")
         }
 
